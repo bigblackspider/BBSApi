@@ -10,7 +10,7 @@ using Settings = BBSApi.MailServer.Properties.Settings;
 
 namespace BBSApi.MailServer
 {
-    public class Engine
+    public class MailEngine
     {
         private const string ERR_DOMAIN_MISSING = "Domain '{0}' does not exist.";
         private const string ERR_DOMAIN_EXISTS = "Domain '{0}' already exists.";
@@ -20,7 +20,7 @@ namespace BBSApi.MailServer
         private const string ERR_ALIAS_EXISTS = "Alias '{0}' already exists in domain '{1}'.";
         private static readonly IInterfaceApplication app = new Application();
 
-        static Engine()
+        static MailEngine()
         {
             app.Authenticate(Settings.Default.MailAdminUser, Settings.Default.MailAdminPassword);
         }

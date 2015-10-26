@@ -1,4 +1,4 @@
-﻿namespace BBSApi.Models
+﻿namespace BBSApi.Models.Mail
 {
     public class Domain
     {

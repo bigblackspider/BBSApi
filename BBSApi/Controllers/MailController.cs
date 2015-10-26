@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web.Http;
 using BBSApi.MailServer;
 using BBSApi.MailServer.Extenders;
-using BBSApi.Models;
+using BBSApi.Models.Mail;
 using MailDomain = hMailServer.Domain;
 using MailAccount = hMailServer.Account;
 using MailAlias = hMailServer.Alias;
@@ -17,7 +17,7 @@ namespace BBSApi.Controllers
         [Route("domains")]
         public IEnumerable<Domain> GetDomains()
         {
-            return Engine.GetDomains().Select(mailDomain => new Domain
+            return MailEngine.GetDomains().Select(mailDomain => new Domain
             {
                 DomainName = mailDomain.Name,
                 Active = mailDomain.Active,
@@ -29,7 +29,7 @@ namespace BBSApi.Controllers
         [Route("domains/{domainName}")]
         public Domain CreateDomain(string domainName)
         {
-            var mailDomain = Engine.CreateDomain(domainName);
+            var mailDomain = MailEngine.CreateDomain(domainName);
             return new Domain
             {
                 DomainName = mailDomain.Name,
@@ -37,14 +37,13 @@ namespace BBSApi.Controllers
                 Postmaster = mailDomain.Postmaster
             };
         }
-        
-        
-        
+
+
         [HttpGet]
         [Route("domains/{domainName}")]
         public Domain GetDomain(string domainName)
         {
-            var mailDomain = Engine.GetDomain(domainName);
+            var mailDomain = MailEngine.GetDomain(domainName);
             return new Domain
             {
                 ID = mailDomain.ID,
@@ -58,7 +57,7 @@ namespace BBSApi.Controllers
         [Route("domains/{domainName}/accounts")]
         public IEnumerable<Account> GetAccounts(string domainName)
         {
-            var mailDomain = Engine.GetDomain(domainName);
+            var mailDomain = MailEngine.GetDomain(domainName);
             return mailDomain.Accounts.ToEnumerable().Select(mailAccount => new Account
             {
                 ID = mailAccount.ID,
@@ -77,7 +76,7 @@ namespace BBSApi.Controllers
             if (!address.Contains("@"))
                 address = address + "@" + domainName;
 
-            return (from mailAccount in Engine.GetDomain(domainName).Accounts.ToEnumerable()
+            return (from mailAccount in MailEngine.GetDomain(domainName).Accounts.ToEnumerable()
                 where mailAccount.Address == address
                 select new Account
                 {
@@ -94,7 +93,7 @@ namespace BBSApi.Controllers
         [Route("domains/{domainName}/aliases")]
         public IEnumerable<Alias> GetAliases(string domainName)
         {
-            var mailDomain = Engine.GetDomain(domainName);
+            var mailDomain = MailEngine.GetDomain(domainName);
             return mailDomain.Aliases.ToEnumerable().Select(mailAlias => new Alias
             {
                 ID = mailAlias.ID,
@@ -110,7 +109,7 @@ namespace BBSApi.Controllers
             if (!aliasName.Contains("@"))
                 aliasName = aliasName + "@" + domainName;
 
-            return (from mailAlias in Engine.GetDomain(domainName).Aliases.ToEnumerable()
+            return (from mailAlias in MailEngine.GetDomain(domainName).Aliases.ToEnumerable()
                 where mailAlias.Name == aliasName
                 select new Alias
                 {

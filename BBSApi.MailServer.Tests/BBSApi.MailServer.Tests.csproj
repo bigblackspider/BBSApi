@@ -63,9 +63,6 @@
     <Compile Include="UnitTestMail.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BBSApi.MailServer\BBSApi.MailServer.csproj">
       <Project>{5c1695a5-06c8-4fd0-8182-92f014f78130}</Project>
       <Name>BBSApi.MailServer</Name>

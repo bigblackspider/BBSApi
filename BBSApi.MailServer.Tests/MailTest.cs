@@ -18,28 +18,28 @@ namespace BBSApi.MailServer.Tests
 
             //********** Create Domain
             var tstDomainName = "Test01.com";
-            Engine.CreateDomain(tstDomainName);
-            Assert.IsTrue(Engine.DoesDomainExist(tstDomainName),string.Format("Mail domain '{0}' create failed.",tstDomainName));
+            MailEngine.CreateDomain(tstDomainName);
+            Assert.IsTrue(MailEngine.DoesDomainExist(tstDomainName),string.Format("Mail domain '{0}' create failed.",tstDomainName));
 
             //********** Check Domain Default Accounts
             var tstAccountName = "admin";
-            Assert.IsTrue(Engine.DoesAccountExist(tstDomainName, tstAccountName), string.Format("Mail domain '{0}' Account '{1}' missing.", tstDomainName, tstAccountName));
+            Assert.IsTrue(MailEngine.DoesAccountExist(tstDomainName, tstAccountName), string.Format("Mail domain '{0}' Account '{1}' missing.", tstDomainName, tstAccountName));
             tstAccountName = "postmaster";
-            Assert.IsTrue(Engine.DoesAccountExist(tstDomainName, tstAccountName), string.Format("Mail domain '{0}' Account '{1}' missing.", tstDomainName, tstAccountName));
+            Assert.IsTrue(MailEngine.DoesAccountExist(tstDomainName, tstAccountName), string.Format("Mail domain '{0}' Account '{1}' missing.", tstDomainName, tstAccountName));
            
             //********** Check Domain Default Aliases
             var tstAliasName = "sales";
-            Assert.IsTrue(Engine.DoesAliasExist(tstDomainName, tstAliasName), string.Format("Mail domain '{0}' Alias '{1}' missing.", tstDomainName, tstAliasName));
+            Assert.IsTrue(MailEngine.DoesAliasExist(tstDomainName, tstAliasName), string.Format("Mail domain '{0}' Alias '{1}' missing.", tstDomainName, tstAliasName));
             tstAliasName = "info";
-            Assert.IsTrue(Engine.DoesAliasExist(tstDomainName, tstAliasName), string.Format("Mail domain '{0}' Alias '{1}' missing.", tstDomainName, tstAliasName));
+            Assert.IsTrue(MailEngine.DoesAliasExist(tstDomainName, tstAliasName), string.Format("Mail domain '{0}' Alias '{1}' missing.", tstDomainName, tstAliasName));
             tstAliasName = "abuse";
-            Assert.IsTrue(Engine.DoesAliasExist(tstDomainName, tstAliasName), string.Format("Mail domain '{0}' Alias '{1}' missing.", tstDomainName, tstAliasName));
+            Assert.IsTrue(MailEngine.DoesAliasExist(tstDomainName, tstAliasName), string.Format("Mail domain '{0}' Alias '{1}' missing.", tstDomainName, tstAliasName));
 
             //********** Try create a duplicate Domain
             hMailServer.Domain domain = null;
             try
             {
-                domain = Engine.CreateDomain(tstDomainName);
+                domain = MailEngine.CreateDomain(tstDomainName);
             }
             catch (Exception)
             {
@@ -51,7 +51,7 @@ namespace BBSApi.MailServer.Tests
             tstDomainName = "xxxx";
             try
             {
-                domain = Engine.CreateDomain(tstDomainName);
+                domain = MailEngine.CreateDomain(tstDomainName);
             }
             catch (Exception)
             {
@@ -68,7 +68,7 @@ namespace BBSApi.MailServer.Tests
             
             //********** Create Domain
             var tstDomainName = "Test01.com";
-            Engine.CreateDomain(tstDomainName);
+            MailEngine.CreateDomain(tstDomainName);
 
             //********** Update All Details
             var json = JsonConvert.SerializeObject(new Dictionary<string, object>
@@ -82,10 +82,10 @@ namespace BBSApi.MailServer.Tests
                 {"MaxNumberOfAliases", 16},
                 {"MaxNumberOfDistributionLists", 17}
             });
-            Engine.UpdateDomain(tstDomainName,json);
+            MailEngine.UpdateDomain(tstDomainName,json);
 
             //********** Check Details
-            var domain = Engine.GetDomain(tstDomainName);
+            var domain = MailEngine.GetDomain(tstDomainName);
             Assert.IsFalse(domain.Active, string.Format("Mail domain '{0}' failed to update 'Active'.", tstDomainName));
             Assert.AreEqual("xxxx@" + tstDomainName, domain.Postmaster, "Mail domain '{0}' failed to update 'Postmaster'.".Fmt(tstDomainName));
             Assert.AreEqual(1000, domain.MaxSize, "Mail domain '{0}' failed to update 'MaxSize'.".Fmt(tstDomainName));
@@ -101,10 +101,10 @@ namespace BBSApi.MailServer.Tests
                 {"Active", true},
                 {"MaxSize", 2000}
             });
-            Engine.UpdateDomain(tstDomainName, json);
+            MailEngine.UpdateDomain(tstDomainName, json);
 
             //********** Check Details 2
-            domain = Engine.GetDomain(tstDomainName);
+            domain = MailEngine.GetDomain(tstDomainName);
             Assert.IsTrue(domain.Active, string.Format("Mail domain '{0}' failed to update 'Active' (Check Details 2).", tstDomainName));
             Assert.AreEqual("xxxx@" + tstDomainName, domain.Postmaster, "Mail domain '{0}' failed to update 'Postmaster' (Check Details 2).".Fmt(tstDomainName));
             Assert.AreEqual(2000, domain.MaxSize, "Mail domain '{0}' failed to update 'MaxSize' (Check Details 2).".Fmt(tstDomainName));
@@ -129,7 +129,7 @@ namespace BBSApi.MailServer.Tests
             bool domainUpdated = false;
             try
             {
-                Engine.UpdateDomain(tstDomainName, json);
+                MailEngine.UpdateDomain(tstDomainName, json);
                 domainUpdated = true;
             }
             catch (Exception)
@@ -147,10 +147,10 @@ namespace BBSApi.MailServer.Tests
 
             //********** Create Domain
             var tstDomainName = "Test01.com";
-            Engine.CreateDomain(tstDomainName);
+            MailEngine.CreateDomain(tstDomainName);
 
             //********** Create Account
-            Engine.CreateAccount(tstDomainName,"testaccount01","Test","Account");
+            MailEngine.CreateAccount(tstDomainName,"testaccount01","Test","Account");
 
             //********** Check Details
 
@@ -160,8 +160,8 @@ namespace BBSApi.MailServer.Tests
         
         private static void DeleteAllDomains()
         {
-            foreach (var domain in Engine.GetDomains())
-                Engine.DeleteDomain(domain.Name);
+            foreach (var domain in MailEngine.GetDomains())
+                MailEngine.DeleteDomain(domain.Name);
         }
     }
 }
