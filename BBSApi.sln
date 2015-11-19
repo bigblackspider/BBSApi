@@ -5,13 +5,16 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi", "BBSApi\BBSApi.csproj", "{8C570C78-501A-424C-A2AC-B41C10DEE8FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi.Tests", "BBSApi.Tests\BBSApi.Tests.csproj", "{49CA5CE6-E2A2-49D5-9E61-5F1E4049F4DC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi.MailServer", "BBSApi.MailServer\BBSApi.MailServer.csproj", "{5C1695A5-06C8-4FD0-8182-92F014F78130}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi.MailServer.Tests", "BBSApi.MailServer.Tests\BBSApi.MailServer.Tests.csproj", "{14DAAABC-A91A-465B-A71B-9011C0C1F3E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi.WebServer", "BBSApi.WebServer\BBSApi.WebServer.csproj", "{933DE01A-8453-4BEB-ADE7-F7F878C70DF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3023B959-6E52-4A51-8BE8-01F364540AD8}"
+	ProjectSection(SolutionItems) = preProject
+		Library\Interop.hMailServer.dll = Library\Interop.hMailServer.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +26,6 @@ Global
 		{8C570C78-501A-424C-A2AC-B41C10DEE8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C570C78-501A-424C-A2AC-B41C10DEE8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C570C78-501A-424C-A2AC-B41C10DEE8FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49CA5CE6-E2A2-49D5-9E61-5F1E4049F4DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49CA5CE6-E2A2-49D5-9E61-5F1E4049F4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49CA5CE6-E2A2-49D5-9E61-5F1E4049F4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49CA5CE6-E2A2-49D5-9E61-5F1E4049F4DC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C1695A5-06C8-4FD0-8182-92F014F78130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C1695A5-06C8-4FD0-8182-92F014F78130}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C1695A5-06C8-4FD0-8182-92F014F78130}.Release|Any CPU.ActiveCfg = Release|Any CPU

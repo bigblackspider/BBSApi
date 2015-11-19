@@ -221,11 +221,13 @@ namespace BBSApi.MailServer
             domainName = domainName.Trim().ToLower();
             aliasName = aliasName.Trim().ToLower();
 
+            var tst = App.Domains;
+
             return
                 App.Domains.ToEnumerable()
                     .Where(d => d.Name == domainName)
                     .SelectMany(d => d.Aliases.ToEnumerable())
-                    .Any(alias => alias.Name == aliasName);
+                    .Any(alias => alias.Name.ToLower() == aliasName);
         }
 
         public static MailAlias CreateAlias(string domainName, string aliasName, string accountName)
