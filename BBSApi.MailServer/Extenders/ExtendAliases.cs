@@ -26,7 +26,7 @@ namespace BBSApi.MailServer.Extenders
         {
             try
             {
-                return (domains.ItemByName[name] != null);
+                return domains.ItemByName[name] != null;
             }
             catch
             {

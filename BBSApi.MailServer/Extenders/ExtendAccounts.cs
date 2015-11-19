@@ -18,7 +18,7 @@ namespace BBSApi.MailServer.Extenders
             }
         }
 
-       public static IEnumerable<Account> ToEnumerable(this Accounts accounts, Filter filter)
+        public static IEnumerable<Account> ToEnumerable(this Accounts accounts, Filter filter)
         {
             return accounts.ToEnumerable().Where(domain => filter(domain));
         }
@@ -32,7 +32,7 @@ namespace BBSApi.MailServer.Extenders
             foreach (var change in delta)
             {
                 if (change.Key == "Active")
-                   account.Active = (bool)change.Value;
+                    account.Active = (bool) change.Value;
                 if (change.Key == "PersonFirstName")
                     account.PersonFirstName = change.Value.ToString();
                 if (change.Key == "PersonLastName")

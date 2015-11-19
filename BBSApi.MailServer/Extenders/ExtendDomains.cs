@@ -18,13 +18,13 @@ namespace BBSApi.MailServer.Extenders
             }
         }
 
-      public static IEnumerable<Domain> ToEnumerable(this Domains domains, Filter filter)
+        public static IEnumerable<Domain> ToEnumerable(this Domains domains, Filter filter)
         {
             return domains.ToEnumerable().Where(domain => filter(domain));
         }
-        
 
-       public static void Update(this Domain domain, string changes)
+
+        public static void Update(this Domain domain, string changes)
         {
             //********** Get changes
             var delta = JsonConvert.DeserializeObject<Dictionary<string, object>>(changes);
