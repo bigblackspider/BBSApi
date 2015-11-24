@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using BBSApi.MailServer.Extenders;
 using hMailServer;
-using MailDomain = hMailServer.Domain;
-using MailAccount = hMailServer.Account;
-using MailAlias = hMailServer.Alias;
+using hMailDomain = hMailServer.Domain;
+using hMailAccount = hMailServer.Account;
+using hMailAlias = hMailServer.Alias;
 using Settings = BBSApi.MailServer.Properties.Settings;
 
 namespace BBSApi.MailServer
@@ -25,12 +25,12 @@ namespace BBSApi.MailServer
             App.Authenticate(Settings.Default.MailAdminUser, Settings.Default.MailAdminPassword);
         }
 
-        public static IEnumerable<MailDomain> GetDomains()
+        public static IEnumerable<hMailDomain> GetDomains()
         {
             return App.Domains.ToEnumerable();
         }
 
-        public static IEnumerable<MailAccount> GetAccounts(string domainName)
+        public static IEnumerable<hMailAccount> GetAccounts(string domainName)
         {
             //********** Init
             domainName = domainName.Trim().ToLower();
@@ -47,7 +47,7 @@ namespace BBSApi.MailServer
                 select a;
         }
 
-        public static IEnumerable<MailAlias> GetAliases(string domainName)
+        public static IEnumerable<hMailAlias> GetAliases(string domainName)
         {
             //********** Init
             domainName = domainName.Trim().ToLower();
@@ -82,7 +82,7 @@ namespace BBSApi.MailServer
             return false;
         }
 
-        public static MailDomain CreateDomain(string domainName)
+        public static hMailDomain CreateDomain(string domainName)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace BBSApi.MailServer
             }
         }
 
-        public static MailDomain GetDomain(string domainName)
+        public static hMailDomain GetDomain(string domainName)
         {
             //********** Init
             domainName = domainName.Trim().ToLower();
@@ -172,7 +172,7 @@ namespace BBSApi.MailServer
                     .Any(account => account.Address == accountName + "@" + domainName);
         }
 
-        public static MailAccount CreateAccount(string domainName, string accountName, string firstName, string lastName)
+        public static hMailAccount CreateAccount(string domainName, string accountName, string firstName, string lastName)
         {
             //********** Init
             domainName = domainName.Trim().ToLower();
@@ -220,9 +220,6 @@ namespace BBSApi.MailServer
             //********** Init
             domainName = domainName.Trim().ToLower();
             aliasName = aliasName.Trim().ToLower();
-
-            var tst = App.Domains;
-
             return
                 App.Domains.ToEnumerable()
                     .Where(d => d.Name == domainName)
@@ -230,7 +227,7 @@ namespace BBSApi.MailServer
                     .Any(alias => alias.Name.ToLower() == aliasName);
         }
 
-        public static MailAlias CreateAlias(string domainName, string aliasName, string accountName)
+        public static hMailAlias CreateAlias(string domainName, string aliasName, string accountName)
         {
             //********** Init
             domainName = domainName.Trim().ToLower();

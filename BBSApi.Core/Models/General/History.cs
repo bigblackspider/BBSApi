@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using BBSApi.Models.Types;
+using BBSApi.Core.Models.Types;
 
-namespace BBSApi.Models.Web
+namespace BBSApi.Core.Models.General
 {
     public class History
     {

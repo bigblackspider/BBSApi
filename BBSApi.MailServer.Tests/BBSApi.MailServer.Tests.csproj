@@ -63,6 +63,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BBSApi.Core\BBSApi.Core.csproj">
+      <Project>{157c97c3-9028-4492-a713-f48731651206}</Project>
+      <Name>BBSApi.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BBSApi.MailServer\BBSApi.MailServer.csproj">
       <Project>{5c1695a5-06c8-4fd0-8182-92f014f78130}</Project>
       <Name>BBSApi.MailServer</Name>

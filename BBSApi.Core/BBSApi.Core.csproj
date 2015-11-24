@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{933DE01A-8453-4BEB-ADE7-F7F878C70DF9}</ProjectGuid>
+    <ProjectGuid>{157C97C3-9028-4492-A713-F48731651206}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BBSApi.WebServer</RootNamespace>
-    <AssemblyName>BBSApi.WebServer</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <RootNamespace>BBSApi.Core</RootNamespace>
+    <AssemblyName>BBSApi.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,15 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WebEngine.cs" />
+    <Compile Include="Models\Customer\Address.cs" />
+    <Compile Include="Models\Customer\CustomerAccount.cs" />
+    <Compile Include="Models\General\DateRange.cs" />
+    <Compile Include="Models\Mail\Account.cs" />
+    <Compile Include="Models\Mail\Alias.cs" />
+    <Compile Include="Models\Mail\Domain.cs" />
+    <Compile Include="Models\Types\THistoryType.cs" />
+    <Compile Include="Models\Types\TSiteStatus.cs" />
+    <Compile Include="Models\General\History.cs" />
+    <Compile Include="Models\Web\WebSite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BBSApi.Core\BBSApi.Core.csproj">
-      <Project>{157c97c3-9028-4492-a713-f48731651206}</Project>
-      <Name>BBSApi.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

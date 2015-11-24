@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using BBSApi.Core.Models.Mail;
 using BBSApi.MailServer;
 using BBSApi.MailServer.Extenders;
-using BBSApi.Models.Mail;
 using MailDomain = hMailServer.Domain;
 using MailAccount = hMailServer.Account;
 using MailAlias = hMailServer.Alias;
@@ -46,7 +46,7 @@ namespace BBSApi.Controllers
             var mailDomain = MailEngine.GetDomain(domainName);
             return new Domain
             {
-                ID = mailDomain.ID,
+                DomainId = mailDomain.ID,
                 DomainName = mailDomain.Name,
                 Active = mailDomain.Active,
                 Postmaster = mailDomain.Postmaster
@@ -60,7 +60,7 @@ namespace BBSApi.Controllers
             var mailDomain = MailEngine.GetDomain(domainName);
             return mailDomain.Accounts.ToEnumerable().Select(mailAccount => new Account
             {
-                ID = mailAccount.ID,
+                AccountId = mailAccount.ID,
                 Address = mailAccount.Address,
                 Active = mailAccount.Active,
                 PersonFirstName = mailAccount.PersonFirstName,
@@ -80,7 +80,7 @@ namespace BBSApi.Controllers
                 where mailAccount.Address == address
                 select new Account
                 {
-                    ID = mailAccount.ID,
+                    AccountId = mailAccount.ID,
                     Address = mailAccount.Address,
                     Active = mailAccount.Active,
                     PersonFirstName = mailAccount.PersonFirstName,
@@ -96,7 +96,7 @@ namespace BBSApi.Controllers
             var mailDomain = MailEngine.GetDomain(domainName);
             return mailDomain.Aliases.ToEnumerable().Select(mailAlias => new Alias
             {
-                ID = mailAlias.ID,
+                AliasId = mailAlias.ID,
                 AliasName = mailAlias.Name,
                 RedirectName = mailAlias.Value
             });
@@ -113,7 +113,7 @@ namespace BBSApi.Controllers
                 where mailAlias.Name == aliasName
                 select new Alias
                 {
-                    ID = mailAlias.ID,
+                    AliasId = mailAlias.ID,
                     AliasName = mailAlias.Name,
                     RedirectName = mailAlias.Value
                 }).FirstOrDefault();

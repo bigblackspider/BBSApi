@@ -1,4 +1,4 @@
-﻿namespace BBSApi.Models.Types
+﻿namespace BBSApi.Core.Models.Types
 {
     public enum THistoryType
     {
