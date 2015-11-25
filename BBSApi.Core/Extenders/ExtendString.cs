@@ -31,7 +31,18 @@ namespace BBSApi.Core.Extenders
             }
         }
 
-       
+        public static bool IsValidDomainName(this string domain)
+        {
+            try
+            {
+                var tst = new Regex(@"^(([a-z]|[a-z][a-z0-9\-]*[a-z0-9])\.)*([a-z]|[a-z][a-z0-9\-]*[a-z0-9])$", RegexOptions.IgnoreCase);
+                return tst.IsMatch(domain);
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         public static string Fmt(this string fmt, params object[] args)
         {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
-using BBSApi.Core.Models.General;
 using BBSApi.Core.Models.Web;
 using BBSApi.WebServer;
 
@@ -10,60 +10,89 @@ namespace BBSApi.Controllers
     [RoutePrefix("api/web")]
     public class WebController : ApiController
     {
+        private IEnumerable<WebSite> _webSites => WebEngine.GetSites();
+
         [HttpGet]
         [Route("sites")]
-        public IEnumerable<WebSite> GetSites()
+        public IHttpActionResult GetSites()
         {
-            return WebEngine.GetSites();
+            try
+            {
+                return Ok(_webSites);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
+
+        [HttpGet]
+        [Route("sites/{siteId:int}")]
+        public IHttpActionResult GetSite(int siteId)
+        {
+            try
+            {
+                var site = _webSites.FirstOrDefault(o => o.SiteId == siteId);
+                if (site != null)
+                    return Ok(site);
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
 
         [HttpPost]
         [Route("sites")]
-        public IEnumerable<WebSite> GetSites([FromBody] DateRange range)
+        public IHttpActionResult CreateSite([FromBody] WebSite webSite)
         {
-            return WebEngine.GetSites(range);
+            try
+            {
+                if (_webSites.Any(o => o.DomainName == webSite.DomainName))
+                    return Conflict();
+                var site = WebEngine.CreateSite(webSite);
+                var location = Request.RequestUri + "/" + site.SiteId;
+                return Created(location, site);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpPut]
-        [Route("sites/{siteName}")]
-        public WebSite CreateSite(string siteName, [FromBody] WebSite site)
+        [Route("sites/{siteId:int}")]
+        public IHttpActionResult UpdateSite(int siteId, [FromBody] WebSite webSite)
         {
-            return WebEngine.CreateSite(siteName, site);
-        }
-
-        [HttpPost]
-        [Route("sites/{token}")]
-        public WebSite UpdateSite(Guid token, [FromBody] WebSite site)
-        {
-            return WebEngine.UpdateSite(token, site);
+            try
+            {
+                if (_webSites.Any(o => o.SiteId != webSite.SiteId))
+                    return NotFound();
+                return Ok(WebEngine.UpdateSite(siteId, webSite));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpDelete]
-        [Route("sites/{token}")]
-        public void DeleteSite(Guid token)
+        [Route("sites/{siteId:int}")]
+        public IHttpActionResult DeleteSite(int siteId)
         {
-            WebEngine.DeleteSite(token);
-        }
-
-        [HttpGet]
-        [Route("sites/{siteName}")]
-        public WebSite GetSite(string siteName)
-        {
-            return WebEngine.GetSite(siteName);
-        }
-
-        [HttpGet]
-        [Route("sites/{status}")]
-        public WebSite GetSite(int status)
-        {
-            return WebEngine.GetSite(status);
-        }
-
-        [HttpGet]
-        [Route("sites/{token}")]
-        public WebSite GetSite(Guid token)
-        {
-            return WebEngine.GetSite(token);
+            try
+            {
+                if (_webSites.Any(o => o.SiteId != siteId))
+                    return NotFound();
+                WebEngine.DeleteSite(siteId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

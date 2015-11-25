@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BBSApi.Core.Extenders;
 using BBSApi.Core.Models.General;
 using BBSApi.Core.Models.Types;
 using BBSApi.Core.Models.Web;
@@ -9,6 +10,9 @@ namespace BBSApi.WebServer
 {
     public class WebEngine
     {
+        private const string ERR_MISSING_SITE = "Web site with an Id of '{0}' does not exist.";
+
+
         private static List<WebSite> _WebSites { get; } = new List<WebSite>();
 
 
@@ -27,44 +31,33 @@ namespace BBSApi.WebServer
             return _WebSites.Where(o => (o.DateCreated >= range.FromDate) && (o.DateCreated <= range.ToDate)).ToList();
         }
 
-        public static WebSite GetSite(int siteId)
-        {
-            return _WebSites.FirstOrDefault(o => o.SiteId == siteId);
-        }
+        
 
-        public static WebSite GetSite(Guid token)
+        public static WebSite CreateSite(WebSite webSite)
         {
-            return _WebSites.FirstOrDefault(o => o.Token == token);
-        }
-
-        public static WebSite GetSite(string name)
-        {
-            return _WebSites.FirstOrDefault(o => o.Name == name);
-        }
-
-
-        public static WebSite CreateSite(string siteName, WebSite site)
-        {
-            if (_WebSites.Any(o => o.Name == siteName))
-                throw new Exception($"Web site '{siteName}' create already exists.");
-            _WebSites.Add(site);
-            return site;
-        }
-
-        public static WebSite UpdateSite(Guid token, WebSite site)
-        {
-            var webSite = GetSite(token);
-            if (webSite == null)
-                throw new Exception($"Web site with token of '{token}' does not exist.");
-            webSite.Update(site);
+            if (_WebSites.Any(o => o.DomainName == webSite.DomainName))
+                throw new Exception($"Web site with domain of '{webSite.DomainName}' create already exists.");
+            _WebSites.Add(webSite);
             return webSite;
         }
 
-        public static void DeleteSite(Guid token)
+        public static WebSite UpdateSite(int siteId, WebSite webSite)
         {
-            if (_WebSites.Any(o => o.Token != token))
-                throw new Exception($"Web site with token of '{token}' does not exist.");
-            _WebSites.Remove(_WebSites.FirstOrDefault(o => o.Token == token));
+            var site = _WebSites.FirstOrDefault(o => o.SiteId == siteId);
+            if (site == null)
+                throw new Exception(ERR_MISSING_SITE.Fmt(siteId));
+            site.Update(webSite);
+            return site;
         }
+
+        public static void DeleteSite(int siteId)
+        {
+            var site = _WebSites.FirstOrDefault(o => o.SiteId == siteId);
+            if (site == null)
+                throw new Exception(ERR_MISSING_SITE.Fmt(siteId));
+            _WebSites.Remove(site);
+        }
+
+        
     }
 }

@@ -1,14 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using BBSApi.Core.Extenders;
 using BBSApi.Core.Models.Types;
 
 namespace BBSApi.Core.Models.Web
 {
     public class WebSite
     {
+        private string _domainName;
         public int SiteId { get; set; }
         public Guid Token { get; } = new Guid();
-        public string Name { get; set; }
+
+        public string DomainName
+        {
+            get { return _domainName; }
+            set
+            {
+                if (!value.IsValidDomainName())
+                    throw new Exception($"Domain name '{value}' is invalid.");
+                _domainName = value;
+            }
+        }
+
         public string Description { get; set; }
         public DateTime DateCreated { get; } = DateTime.UtcNow;
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
@@ -19,7 +32,7 @@ namespace BBSApi.Core.Models.Web
 
         public void Update(WebSite details)
         {
-            Name = details.Name;
+            DomainName = details.DomainName;
             Description = details.Description;
             LastUpdated = DateTime.UtcNow;
             Status = details.Status;
