@@ -48,8 +48,10 @@ namespace BBSApi.AccountsServer
 
         public static void DeleteCustomer(int customerId)
         {
-            if (_Accounts.All(o => o.CustomerId != customerId))
+            var cust = _Accounts.FirstOrDefault(o => o.CustomerId == customerId);
+            if (cust == null)
                 throw new Exception(ERR_MISSING_CUSTOMER.Fmt(customerId));
+            _Accounts.Remove(cust);
         }
 
         public static IEnumerable<History> GetCustomerHistory(int customerId)
