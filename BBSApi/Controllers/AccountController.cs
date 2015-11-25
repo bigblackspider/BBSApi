@@ -118,7 +118,7 @@ namespace BBSApi.Controllers
             {
                 if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
-                return Ok(AccountsEngine.GetCustomerWebSites(customerId));
+                return Ok(AccountsEngine.GetCustomerWebSites(customerId).Select(id => Request.RequestUri + "/" + id));
             }
             catch (Exception ex)
             {
@@ -166,7 +166,7 @@ namespace BBSApi.Controllers
             {
                 if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
-                return Ok(AccountsEngine.GetCustomerMailDomains(customerId));
+                return Ok(AccountsEngine.GetCustomerMailDomains(customerId).Select(id => Request.RequestUri + "/" + id));
             }
             catch (Exception ex)
             {
