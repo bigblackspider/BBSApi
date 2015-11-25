@@ -10,11 +10,20 @@ namespace BBSApi.Controllers
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
+        private IEnumerable<CustomerAccount> _customerAccounts => AccountsEngine.GetAccounts();
+
         [HttpGet]
         [Route("customers")]
-        public IEnumerable<CustomerAccount> GetAccounts()
+        public IHttpActionResult GetAccounts()
         {
-            return AccountsEngine.GetAccounts();
+            try
+            {
+                return Ok(_customerAccounts);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpGet]
@@ -23,7 +32,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                var cust = GetAccounts().FirstOrDefault(o => o.CustomerId == customerId);
+                var cust = _customerAccounts.FirstOrDefault(o => o.CustomerId == customerId);
                 if (cust != null)
                     return Ok(cust);
                 return NotFound();
@@ -40,7 +49,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().Any(o => o.Email == customerAccount.Email))
+                if (_customerAccounts.Any(o => o.Email == customerAccount.Email))
                     return Conflict();
                 var cust = AccountsEngine.CreateCustomer(customerAccount);
                 var location = Request.RequestUri + "/" + cust.CustomerId;
@@ -58,7 +67,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.UpdateCustomer(customerId, customerAccount));
             }
@@ -74,7 +83,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 AccountsEngine.DeleteCustomer(customerId);
                 return Ok();
@@ -91,7 +100,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.GetCustomerHistory(customerId));
             }
@@ -107,7 +116,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.GetCustomerWebSites(customerId));
             }
@@ -123,7 +132,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.AttatchCustomerWebsite(customerId, siteId));
             }
@@ -139,7 +148,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.DetatchCustomerWebsite(customerId, siteId));
             }
@@ -155,7 +164,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.GetCustomerMailDomains(customerId));
             }
@@ -171,7 +180,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.AttatchCustomerMailDomain(customerId, domainId));
             }
@@ -187,7 +196,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (GetAccounts().All(o => o.CustomerId != customerId))
+                if (_customerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.DetatchCustomerMailDomain(customerId, domainId));
             }
