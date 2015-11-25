@@ -52,7 +52,6 @@
     <Compile Include="Extenders\ExtendAccounts.cs" />
     <Compile Include="Extenders\ExtendAliases.cs" />
     <Compile Include="Extenders\ExtendDomains.cs" />
-    <Compile Include="Extenders\ExtendString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -17,7 +17,7 @@ namespace BBSApi.Core.Models.Web
         public Dictionary<string, string> Details { get; private set; } = new Dictionary<string, string>();
         public Dictionary<string, object> Images { get; private set; } = new Dictionary<string, object>();
 
-        public void Change(WebSite details)
+        public void Update(WebSite details)
         {
             Name = details.Name;
             Description = details.Description;

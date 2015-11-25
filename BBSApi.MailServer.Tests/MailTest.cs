@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BBSApi.Core.Extenders;
 using BBSApi.MailServer.Extenders;
 using hMailServer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -56,7 +56,7 @@ namespace BBSApi.WebServer
             var webSite = GetSite(token);
             if (webSite == null)
                 throw new Exception($"Web site with token of '{token}' does not exist.");
-            webSite.Change(site);
+            webSite.Update(site);
             return webSite;
         }
 

@@ -48,6 +48,14 @@
       <Project>{157c97c3-9028-4492-a713-f48731651206}</Project>
       <Name>BBSApi.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BBSApi.MailServer\BBSApi.MailServer.csproj">
+      <Project>{5c1695a5-06c8-4fd0-8182-92f014f78130}</Project>
+      <Name>BBSApi.MailServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBSApi.WebServer\BBSApi.WebServer.csproj">
+      <Project>{933de01a-8453-4beb-ade7-f7f878c70df9}</Project>
+      <Name>BBSApi.WebServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
