@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using BBSApi.Core.Extenders;
 using BBSApi.Core.Models.General;
 using BBSApi.Core.Models.Types;
 using BBSApi.Core.Models.Web;
+using BBSApi.WebServer.Properties;
 
 namespace BBSApi.WebServer
 {
@@ -58,6 +60,35 @@ namespace BBSApi.WebServer
             _WebSites.Remove(site);
         }
 
+        public static void BuildSite(int siteId, string templateName)
+        {
+            //********** Get Site Details
+            var site = _WebSites.FirstOrDefault(o => o.SiteId == siteId);
+            if (site == null)
+                throw new Exception(ERR_MISSING_SITE.Fmt(siteId));
+
+            //********** Copy Template Folder
+            var src = Settings.Default.TemplateFolder + "/" + templateName;
+            var target = Settings.Default.WebsiteFolder + "/" + site.DomainName;
+            foreach (string dirPath in Directory.GetDirectories(src, "*",
+                SearchOption.AllDirectories))
+                Directory.CreateDirectory(dirPath.Replace(src, target));
+            foreach (string newPath in Directory.GetFiles(src, "*.*",
+                SearchOption.AllDirectories))
+                File.Copy(newPath, newPath.Replace(src, target), true);
+
+            //********** Update Place Holders
+            foreach (var filePath in Directory.GetFiles(target, "*.*",
+                SearchOption.AllDirectories))
+            {
+                var dets = File.ReadAllText(filePath);
+                foreach (var key in site.Details.Keys)
+                {
+                    dets = dets.Replace(key, site.Details[key]);
+                }
+                File.WriteAllText(filePath,dets);
+            }
+        }
         
     }
 }
