@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using BBSApi.Core.Models.Customer;
-using BBSApi.Core.Models.Mail;
-using BBSApi.Core.Models.Web;
-using Newtonsoft.Json;
-using StackExchange.Redis;
 
 namespace BBSApi.Data
 {
@@ -17,10 +11,10 @@ namespace BBSApi.Data
             r.Create(entity);
         }
 
-        public void Delete<T>(T entity) where T : class
+        public void Delete<T>(Func<T, bool> predicate, T entity) where T : class
         {
             var r = new RedisMemoryProvider<T>();
-            r.Delete(entity);
+            r.Delete(predicate, entity);
         }
 
         public void DeleteAll<T>() where T : class
@@ -29,7 +23,7 @@ namespace BBSApi.Data
             r.DeleteAll<T>();
         }
 
-        public long Next<T>() where T : class
+        public long NextId<T>() where T : class
         {
             var r = new RedisMemoryProvider<T>();
             return r.Next<T>();
@@ -44,7 +38,7 @@ namespace BBSApi.Data
         public void Update<T>(Func<T, bool> predicate, T entity) where T : class
         {
             var r = new RedisMemoryProvider<T>();
-            r.Update(predicate,entity);
+            r.Update(predicate, entity);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using BBSApi.Core.Models.Types;
 using BBSApi.Core.Models.Web;
 using NUnit.Framework;
 
@@ -37,13 +38,25 @@ namespace BBSApi.Data.Tests
 
             //********** Create Test Data
             for (var i = 0; i < 100; i++)
-                ds.Create(TestSite(ds.Next<WebSite>(), $"WebSite{i:0000}"));
+                ds.Create(TestSite(ds.NextId<WebSite>(), $"WebSite{i:0000}"));
+
+            //********** Get All
+            lis = ds.GetAll<WebSite>();
+
+            //********** Delete 
+            var site = ds.GetAll<WebSite>().FirstOrDefault(o => o.DomainName.StartsWith("WebSite006"));
+            site.Status = TSiteStatus.Closed;
+            ds.Update(o => o.SiteId == site.SiteId, site);
+
+            //********** Delete 
+            site = ds.GetAll<WebSite>().FirstOrDefault(o => o.Status == TSiteStatus.Closed);
+            ds.Delete(o => o.SiteId == site.SiteId, site);
 
             //********** Get All
             lis = ds.GetAll<WebSite>();
 
             //********** Delete All
-           ds.DeleteAll<WebSite>();
+            ds.DeleteAll<WebSite>();
 
             //********** Get All
             lis = ds.GetAll<WebSite>();

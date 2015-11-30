@@ -92,23 +92,6 @@ namespace BBSApi.Data
             Store(entity);
         }
 
-        /// <summary>
-        ///     Delete single {T} from cache and Data Store.
-        /// </summary>
-        /// <typeparam name="T">class</typeparam>
-        /// <param name="entity">class object</param>
-        public void Delete<T>(T entity) where T : class
-        {
-            List<object> lis;
-            if (_cache.TryGetValue(typeof (T), out lis))
-            {
-                lis.Remove((T)entity);
-                _cache[typeof (T)] = lis;
-
-                RedisDelete(entity);
-            }
-        }
-
         public void DeleteAll<T>() where T : class
         {
             List<object> lis;
@@ -164,6 +147,20 @@ namespace BBSApi.Data
                     list.Remove(existing);
                 list.Add(entity);
                 _cache[typeof (T)] = list;
+                Store(entity);
+            }
+        }
+
+        public void Delete<T>(Func<T, bool> predicate, T entity) where T : class
+        {
+            List<object> list;
+
+            if (_cache.TryGetValue(typeof(T), out list))
+            {
+                var existing = list.Cast<T>().FirstOrDefault(predicate);
+                if (existing != null)
+                    list.Remove(existing);
+                _cache[typeof(T)] = list;
                 Store(entity);
             }
         }
