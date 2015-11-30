@@ -1,6 +1,6 @@
 ﻿namespace BBSApi.Core.Models.Mail
 {
-    public class Alias
+    public class MailAlias
     {
         public int AliasId { get; set; }
         public string AliasName { get; set; }

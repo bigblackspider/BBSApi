@@ -8,8 +8,7 @@ namespace BBSApi.Core.Models.Web
     public class WebSite
     {
         private string _domainName;
-        public int SiteId { get; set; }
-        public Guid Token { get; } = new Guid();
+        public long SiteId { get; set; } = new Guid().GetHashCode();
 
         public string DomainName
         {

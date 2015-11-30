@@ -60,7 +60,7 @@ namespace BBSApi.WebServer
             _WebSites.Remove(site);
         }
 
-        public static void BuildSite(int siteId, string templateName)
+        public static void BuildSite(long siteId, string templateName)
         {
             //********** Get Site Details
             var site = _WebSites.FirstOrDefault(o => o.SiteId == siteId);

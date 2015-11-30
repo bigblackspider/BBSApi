@@ -1,6 +1,6 @@
 ﻿namespace BBSApi.Core.Models.Mail
 {
-    public class Account
+    public class MailAccount
     {
         public int AccountId { get; set; }
         public bool Active { get; set; }

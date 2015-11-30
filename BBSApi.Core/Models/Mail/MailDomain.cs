@@ -1,6 +1,6 @@
 ﻿namespace BBSApi.Core.Models.Mail
 {
-    public class Domain
+    public class MailDomain
     {
         public int DomainId { get; set; }
         public string DomainName { get; set; }

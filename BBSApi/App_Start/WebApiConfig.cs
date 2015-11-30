@@ -11,7 +11,8 @@ namespace BBSApi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{DomainId}", new {id = RouteParameter.Optional}
+            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{DomainId}", 
+                new {id = RouteParameter.Optional}
                 );
         }
     }

@@ -94,5 +94,23 @@ namespace BBSApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpGet]
+        [Route("sites/{siteId:int}/build/{templateName}")]
+        public IHttpActionResult BuildSite(int siteId,string templateName)
+        {
+            try
+            {
+                var site = _webSites.FirstOrDefault(o => o.SiteId == siteId);
+                if (site == null)
+                    return NotFound();
+                WebEngine.BuildSite(siteId,templateName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }
