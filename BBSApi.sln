@@ -11,11 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi.MailServer.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi.WebServer", "BBSApi.WebServer\BBSApi.WebServer.csproj", "{933DE01A-8453-4BEB-ADE7-F7F878C70DF9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3023B959-6E52-4A51-8BE8-01F364540AD8}"
-	ProjectSection(SolutionItems) = preProject
-		Library\Interop.hMailServer.dll = Library\Interop.hMailServer.dll
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi.Core", "BBSApi.Core\BBSApi.Core.csproj", "{157C97C3-9028-4492-A713-F48731651206}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBSApi.AccountsServer", "BBSApi.Admin\BBSApi.AccountsServer.csproj", "{0D28813F-9609-41EB-83B4-3B76E9C30D88}"

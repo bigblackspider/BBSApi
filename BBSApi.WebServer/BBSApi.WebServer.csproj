@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BBS.RedisExtenders">
-      <HintPath>..\..\BBS.RedisExtenders\BBS.RedisExtenders\bin\Debug\BBS.RedisExtenders.dll</HintPath>
+    <Reference Include="BBS.RedisExtenders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BBSApi.Core\Library\BBS.RedisExtenders.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
