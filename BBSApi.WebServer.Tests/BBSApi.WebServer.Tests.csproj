@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BBS.RedisExtenders">
+      <HintPath>..\..\BBS.RedisExtenders\BBS.RedisExtenders\bin\Debug\BBS.RedisExtenders.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.0.5797.27534, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.0.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -51,17 +54,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="WebTest.cs" />
+    <Compile Include="Tests\WebTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BBSApi.Core\BBSApi.Core.csproj">
       <Project>{157c97c3-9028-4492-a713-f48731651206}</Project>
       <Name>BBSApi.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BBSApi.Data\BBSApi.Data.csproj">
-      <Project>{c96acc93-9c78-41e8-a9b6-7918242a0b53}</Project>
-      <Name>BBSApi.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\BBSApi.WebServer\BBSApi.WebServer.csproj">
       <Project>{933de01a-8453-4beb-ade7-f7f878c70df9}</Project>

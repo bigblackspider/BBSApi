@@ -10,7 +10,7 @@ namespace BBSApi.Controllers
     [RoutePrefix("api/web")]
     public class WebController : ApiController
     {
-        private IEnumerable<WebSite> _webSites => WebEngine.GetSites();
+        private IEnumerable<WebSite> _webSites => WebEngine.WebSites;
 
         [HttpGet]
         [Route("sites")]

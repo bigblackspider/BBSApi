@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BBS.RedisExtenders.Extenders;
 using BBSApi.Core.Extenders;
-using BBSApi.Core.Models.General;
 using BBSApi.Core.Models.Web;
-using BBSApi.Data.Extenders;
 using BBSApi.WebServer.Properties;
 
 namespace BBSApi.WebServer
@@ -83,8 +82,9 @@ namespace BBSApi.WebServer
 
         public static void Commit()
         {
-           WebSites.RedisUpdate();
+            WebSites.RedisUpdate();
         }
+
         public static void Rollback()
         {
             _webSites = new List<WebSite>();

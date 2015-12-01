@@ -75,7 +75,7 @@ namespace BBSApi.AccountsServer
             var cust = _Accounts.FirstOrDefault(o => o.CustomerId == customerId);
             if (cust == null)
                 throw new Exception(ERR_MISSING_CUSTOMER.Fmt(customerId));
-            if (WebEngine.GetSites().All(o => o.SiteId != siteId))
+            if (WebEngine.WebSites.All(o => o.SiteId != siteId))
                 throw new Exception(ERR_MISSING_SITE.Fmt(siteId, customerId));
             if (cust.SiteIdList.Contains(siteId))
                 throw new Exception(ERR_ATTATCH_SITE.Fmt(siteId, customerId));

@@ -1,20 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BBS.RedisExtenders.Extenders;
 using BBSApi.Core.Models.Types;
 using BBSApi.Core.Models.Web;
-using BBSApi.Data.Extenders;
 using NUnit.Framework;
 
-namespace BBSApi.WebServer.Tests
+namespace BBSApi.WebServer.Tests.Tests
 {
     [TestFixture]
     public class WebTest
     {
-        public void WebBuildTst()
-        {
-        }
-
-
+        
         private static WebSite TestSite(string name)
         {
             var s = new WebSite
@@ -101,7 +97,6 @@ namespace BBSApi.WebServer.Tests
             tst = DataStoreLoad();
             Assert.AreEqual(lis.Count, tst.Count);
             Assert.AreEqual(81, tst.Count);
-
         }
     }
 }

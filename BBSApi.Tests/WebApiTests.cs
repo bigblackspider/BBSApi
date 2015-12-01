@@ -13,7 +13,7 @@ namespace BBSApi.Tests
 
         private static WebSite TestSite(string name)
         {
-            var db = Redis.GetDatabase();
+            
 
 
             var s = new WebSite
