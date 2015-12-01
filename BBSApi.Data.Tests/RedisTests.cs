@@ -33,6 +33,7 @@ namespace BBSApi.Data.Tests
         {
             //********** Init
             var lis = new List<WebSite>();
+            lis.RedisClear();
 
             //********** Create Test Data
             for (var i = 0; i < 100; i++)

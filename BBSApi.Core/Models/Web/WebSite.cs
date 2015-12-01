@@ -9,16 +9,19 @@ namespace BBSApi.Core.Models.Web
     {
         private string _domainName;
 
-        public long SiteId { get; set; } 
+        public long SiteId { get; set; }
 
         public string DomainName
         {
             get { return _domainName; }
             set
             {
-                if (!value.IsValidDomainName())
-                    throw new Exception($"Domain name '{value}' is invalid.");
-                _domainName = value;
+                if (value != null)
+                {
+                    if (!value.IsValidDomainName())
+                        throw new Exception($"Domain name '{value}' is invalid.");
+                    _domainName = value;
+                }
             }
         }
 
@@ -27,18 +30,24 @@ namespace BBSApi.Core.Models.Web
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
         public TSiteStatus Status { get; set; } = TSiteStatus.Created;
         public string MailDomainName { get; set; } = "none";
-        public Dictionary<string, string> Details { get; private set; } = new Dictionary<string, string>();
-        public Dictionary<string, object> Images { get; private set; } = new Dictionary<string, object>();
+        public Dictionary<string, string> Details { get; } = new Dictionary<string, string>();
+      
 
         public void Update(WebSite details)
         {
-            DomainName = details.DomainName;
-            Description = details.Description;
+            if (!string.IsNullOrEmpty(details.DomainName))
+                DomainName = details.DomainName;
+            if (!string.IsNullOrEmpty(details.Description))
+                Description = details.Description;
             LastUpdated = DateTime.UtcNow;
             Status = details.Status;
-            MailDomainName = details.MailDomainName;
-            Details = details.Details;
-            Images = details.Images;
+            if (!string.IsNullOrEmpty(details.MailDomainName))
+                MailDomainName = details.MailDomainName;
+            foreach (var key in details.Details.Keys)
+                if (Details.ContainsKey(key))
+                    Details[key] = details.Details[key];
+                else
+                    Details.Add(key,details.Details[key]);
         }
     }
 }

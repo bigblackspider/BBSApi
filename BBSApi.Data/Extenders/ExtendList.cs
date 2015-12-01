@@ -20,9 +20,12 @@ namespace BBSApi.Data.Extenders
 
         public static void RedisGetAll<T>(this List<T> list)
         {
-            var db = Redis.GetDatabase();
-            var setName = typeof (T).Name;
-            list.AddRange(db.SetMembers(setName).Select(o => JsonConvert.DeserializeObject<T>(o)));
+            if (list != null)
+            {
+                var db = Redis.GetDatabase();
+                var setName = typeof(T).Name;
+                list.AddRange(db.SetMembers(setName).Select(o => JsonConvert.DeserializeObject<T>(o)));
+            }   
         }
 
         public static void RedisAdd<T>(this List<T> list, T item)

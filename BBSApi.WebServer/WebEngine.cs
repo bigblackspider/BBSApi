@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using BBSApi.Core.Extenders;
 using BBSApi.Core.Models.General;
-using BBSApi.Core.Models.Types;
 using BBSApi.Core.Models.Web;
-using BBSApi.Data;
+using BBSApi.Data.Extenders;
 using BBSApi.WebServer.Properties;
 
 namespace BBSApi.WebServer
@@ -14,57 +13,52 @@ namespace BBSApi.WebServer
     public class WebEngine
     {
         private const string ERR_MISSING_SITE = "Web site with an Id of '{0}' does not exist.";
-        private static readonly IDataServer ds = new DataServerRedis();
 
+        private static List<WebSite> _webSites;
 
-        public static IEnumerable<WebSite> GetSites()
+        public static List<WebSite> WebSites
         {
-            return ds.GetAll<WebSite>();
-            ;
+            get
+            {
+                if (_webSites == null)
+                {
+                    _webSites = new List<WebSite>();
+                    _webSites.RedisGetAll();
+                }
+                return _webSites;
+            }
         }
-
-        public static IEnumerable<WebSite> GetSites(TSiteStatus status)
-        {
-            return GetSites().Where(o => o.Status == status).ToList();
-        }
-
-        public static List<WebSite> GetSites(DateRange range)
-        {
-            return GetSites().Where(o => (o.DateCreated >= range.FromDate) && (o.DateCreated <= range.ToDate)).ToList();
-        }
-
 
         public static WebSite CreateSite(WebSite webSite)
         {
-            if (GetSites().Any(o => o.DomainName == webSite.DomainName))
+            if (WebSites.Any(o => o.DomainName == webSite.DomainName))
                 throw new Exception($"Web site with domain of '{webSite.DomainName}' create already exists.");
-            webSite.SiteId = ds.NextId<WebSite>();
-            ds.Create(webSite);
+            webSite.SiteId = WebSites.RedisNextId();
+            WebSites.Add(webSite);
             return webSite;
         }
 
-        public static WebSite UpdateSite(int siteId, WebSite webSite)
+        public static WebSite UpdateSite(long siteId, WebSite webSite)
         {
-            var site = GetSites().FirstOrDefault(o => o.SiteId == siteId);
+            var site = WebSites.FirstOrDefault(o => o.SiteId == siteId);
             if (site == null)
                 throw new Exception(ERR_MISSING_SITE.Fmt(siteId));
             site.Update(webSite);
-            ds.Update(o => o.SiteId == siteId, site);
             return site;
         }
 
-        public static void DeleteSite(int siteId)
+        public static void DeleteSite(long siteId)
         {
-            var site = GetSites().FirstOrDefault(o => o.SiteId == siteId);
+            var site = WebSites.FirstOrDefault(o => o.SiteId == siteId);
             if (site == null)
                 throw new Exception(ERR_MISSING_SITE.Fmt(siteId));
-            ds.Delete(o => o.SiteId == siteId, site);
+            WebSites.Remove(site);
         }
 
         public static void BuildSite(long siteId, string templateName)
         {
             //********** Get Site Details
-            var site = GetSites().FirstOrDefault(o => o.SiteId == siteId);
+            var site = WebSites.FirstOrDefault(o => o.SiteId == siteId);
             if (site == null)
                 throw new Exception(ERR_MISSING_SITE.Fmt(siteId));
 
@@ -85,6 +79,16 @@ namespace BBSApi.WebServer
                 dets = site.Details.Keys.Aggregate(dets, (current, key) => current.Replace(key, site.Details[key]));
                 File.WriteAllText(filePath, dets);
             }
+        }
+
+        public static void Commit()
+        {
+           WebSites.RedisUpdate();
+        }
+        public static void Rollback()
+        {
+            _webSites = new List<WebSite>();
+            _webSites.RedisGetAll();
         }
     }
 }
