@@ -2,9 +2,10 @@
 {
     public class MailDomain
     {
-        public int DomainId { get; set; }
+        public long DomainId { get; set; }
         public string DomainName { get; set; }
         public bool Active { get; set; }
         public string Postmaster { get; set; }
+        public long CustomerId { get; set; }
     }
 }

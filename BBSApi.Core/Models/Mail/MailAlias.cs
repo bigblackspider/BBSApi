@@ -2,7 +2,7 @@
 {
     public class MailAlias
     {
-        public int AliasId { get; set; }
+        public long AliasId { get; set; }
         public string AliasName { get; set; }
         public string RedirectName { get; set; }
     }

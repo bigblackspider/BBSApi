@@ -2,11 +2,11 @@
 {
     public class MailAccount
     {
-        public int AccountId { get; set; }
+        public long AccountId { get; set; }
         public bool Active { get; set; }
         public string PersonFirstName { get; set; }
         public string PersonLastName { get; set; }
         public int MaxSize { get; set; }
-        public string Address { get; set; }
+        public string Names { get; set; }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using BBSApi.Core.Extenders;
-using BBSApi.Core.Models.General;
 
 namespace BBSApi.Core.Models.Customer
 {
@@ -11,7 +9,7 @@ namespace BBSApi.Core.Models.Customer
         private string _mobile;
         private string _phone;
 
-        public int CustomerId { get; set; }
+        public long CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleNames { get; set; }
@@ -49,12 +47,10 @@ namespace BBSApi.Core.Models.Customer
             }
         }
 
-        public Address Contact { get; } = new Address();
-        public List<History> History { get; } = new List<History>();
+        public long AddrtessId { get; set; } = -1;
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-        public List<int> SiteIdList { get; set; }
-        public List<int> DomainIdList { get; set; }
+
 
         public CustomerAccount Update(CustomerAccount cust)
         {

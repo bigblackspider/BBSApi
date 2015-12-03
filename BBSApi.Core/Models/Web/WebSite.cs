@@ -25,6 +25,7 @@ namespace BBSApi.Core.Models.Web
             }
         }
 
+        public long CustomerId { get; set; } = -1;
         public string Description { get; set; }
         public DateTime DateCreated { get; } = DateTime.UtcNow;
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using BBSApi.AccountsServer;
@@ -10,29 +9,13 @@ namespace BBSApi.Controllers
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
-        private IEnumerable<CustomerAccount> _customerAccounts => AccountsEngine.GetAccounts();
-
-        [HttpGet]
-        [Route("customers")]
-        public IHttpActionResult GetAccounts()
-        {
-            try
-            {
-                return Ok(_customerAccounts);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
         [HttpGet]
         [Route("customers/{customerId:int}")]
-        public IHttpActionResult GetAccount(int customerId)
+        public IHttpActionResult GetAccount(long customerId)
         {
             try
             {
-                var cust = _customerAccounts.FirstOrDefault(o => o.CustomerId == customerId);
+                var cust = AccountsEngine.CustomerAccounts.FirstOrDefault(o => o.CustomerId == customerId);
                 if (cust != null)
                     return Ok(cust);
                 return NotFound();
@@ -49,7 +32,7 @@ namespace BBSApi.Controllers
         {
             try
             {
-                if (_customerAccounts.Any(o => o.Email == customerAccount.Email))
+                if (AccountsEngine.CustomerAccounts.Any(o => o.Email == customerAccount.Email))
                     return Conflict();
                 var cust = AccountsEngine.CreateCustomer(customerAccount);
                 var location = Request.RequestUri + "/" + cust.CustomerId;
@@ -63,11 +46,11 @@ namespace BBSApi.Controllers
 
         [HttpPut]
         [Route("customers/{customerId:int}")]
-        public IHttpActionResult UpdateCustomer(int customerId, [FromBody] CustomerAccount customerAccount)
+        public IHttpActionResult UpdateCustomer(long customerId, [FromBody] CustomerAccount customerAccount)
         {
             try
             {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
+                if (AccountsEngine.CustomerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.UpdateCustomer(customerId, customerAccount));
             }
@@ -79,11 +62,11 @@ namespace BBSApi.Controllers
 
         [HttpDelete]
         [Route("customers/{customerId:int}")]
-        public IHttpActionResult DeleteCustomer(int customerId)
+        public IHttpActionResult DeleteCustomer(long customerId)
         {
             try
             {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
+                if (AccountsEngine.CustomerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 AccountsEngine.DeleteCustomer(customerId);
                 return Ok();
@@ -96,11 +79,11 @@ namespace BBSApi.Controllers
 
         [HttpGet]
         [Route("customers/{accountId:int}/history")]
-        public IHttpActionResult GetAccountHistory(int customerId)
+        public IHttpActionResult GetAccountHistory(long customerId)
         {
             try
             {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
+                if (AccountsEngine.CustomerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.GetCustomerHistory(customerId));
             }
@@ -112,11 +95,11 @@ namespace BBSApi.Controllers
 
         [HttpGet]
         [Route("customers/{accountId:int}/websites")]
-        public IHttpActionResult GetAccountWebSites(int customerId)
+        public IHttpActionResult GetAccountWebSites(long customerId)
         {
             try
             {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
+                if (AccountsEngine.CustomerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.GetCustomerWebSites(customerId).Select(id => Request.RequestUri + "/" + id));
             }
@@ -126,45 +109,14 @@ namespace BBSApi.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("customers/{customerId:int}/websites/{siteId:int}")]
-        public IHttpActionResult AttachCustomerWebsite(int customerId, int siteId)
-        {
-            try
-            {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
-                    return NotFound();
-                return Ok(AccountsEngine.AttatchCustomerWebsite(customerId, siteId));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        [HttpPut]
-        [Route("customers/{customerId:int}/websites/{siteId:int}")]
-        public IHttpActionResult DetachCustomerWebsite(int customerId, int siteId)
-        {
-            try
-            {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
-                    return NotFound();
-                return Ok(AccountsEngine.DetatchCustomerWebsite(customerId, siteId));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
+        
         [HttpGet]
         [Route("customers/{accountId:int}/maildomains")]
-        public IHttpActionResult GetAccountMailDomains(int customerId)
+        public IHttpActionResult GetAccountMailDomains(long customerId)
         {
             try
             {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
+                if (AccountsEngine.CustomerAccounts.All(o => o.CustomerId != customerId))
                     return NotFound();
                 return Ok(AccountsEngine.GetCustomerMailDomains(customerId).Select(id => Request.RequestUri + "/" + id));
             }
@@ -173,37 +125,6 @@ namespace BBSApi.Controllers
                 return InternalServerError(ex);
             }
         }
-
-        [HttpPost]
-        [Route("customers/{customerId:int}/maildomains/{domainId:int}")]
-        public IHttpActionResult AttachCustomeMailDomain(int customerId, int domainId)
-        {
-            try
-            {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
-                    return NotFound();
-                return Ok(AccountsEngine.AttatchCustomerMailDomain(customerId, domainId));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        [HttpPut]
-        [Route("customers/{customerId:int}/maildomains/{domainId:int}")]
-        public IHttpActionResult DetachCustomerMailDomain(int customerId, int domainId)
-        {
-            try
-            {
-                if (_customerAccounts.All(o => o.CustomerId != customerId))
-                    return NotFound();
-                return Ok(AccountsEngine.DetatchCustomerMailDomain(customerId, domainId));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+        
     }
 }

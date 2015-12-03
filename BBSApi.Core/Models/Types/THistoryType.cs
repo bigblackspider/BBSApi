@@ -5,6 +5,7 @@
         General,
         Site,
         Mail,
-        System
+        System,
+        Account
     }
 }
