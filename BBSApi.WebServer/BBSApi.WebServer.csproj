@@ -31,12 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BBS.RedisExtenders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\BBSApi.Core\Library\BBS.RedisExtenders.dll</HintPath>
-    </Reference>
     <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\StackExchange.Redis.1.0.488\lib\net45\StackExchange.Redis.dll</HintPath>
+      <HintPath>..\packages\StackExchange.Redis.1.0.481\lib\net45\StackExchange.Redis.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -58,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BBS.RedisExtenders\BBS.RedisExtenders\BBS.RedisExtenders.csproj">
+      <Project>{424e9926-2196-4420-ba74-03f0ac7e9583}</Project>
+      <Name>BBS.RedisExtenders</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BBSApi.Core\BBSApi.Core.csproj">
       <Project>{157c97c3-9028-4492-a713-f48731651206}</Project>
       <Name>BBSApi.Core</Name>

@@ -8,5 +8,6 @@
         public string PersonLastName { get; set; }
         public int MaxSize { get; set; }
         public string Names { get; set; }
+        public string Address { get; set; }
     }
 }
